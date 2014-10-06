@@ -25,6 +25,14 @@ var MAViz = function (opts) {
 			style: "arrow",
 			arrowScaleFactor: 0.4,
 			widthMax: 6
+		},
+		nodes: {
+			fontSize: 20
+		},
+		physics: {
+			barnesHut: {
+				springLength: 150
+			}
 		}
 	};
 	
@@ -35,6 +43,14 @@ var MAViz = function (opts) {
 		edges: {
 			style: "arrow",
 			arrowScaleFactor: 0.4
+		},
+		nodes: {
+			color: {
+				background: "#97C2FC",
+				highlight: {
+					background: "#00FF00"
+				}
+			}
 		}
 	};
 	
@@ -75,15 +91,17 @@ var MAViz = function (opts) {
 				
 				// add nodes
 				for (var j = 0; j < groupsTable[i].states.length; j++) {
-					networkNodes.add({id: j, shape: "dot", value: groupsTable[i].states[j].size, 
-										label: "" + groupsTable[i].states[j].size});
+					networkNodes.add({id: groupsTable[i].states[j].id, shape: "dot", value: groupsTable[i].states[j].size, 
+										label: "" + groupsTable[i].states[j].id});
 				}
 				
 				//add edges
 				for (var x = 0; x < groupsTable[i].intensities.length; x++) {
 					for (var y = 0; y < groupsTable[i].intensities[x].length; y++) {
 						if (groupsTable[i].intensities[x][y] > 0) {
-							networkEdges.add({from: x, to: y, value: groupsTable[i].intensities[x][y],
+							var a = groupsTable[i].states[x].id;
+							var b = groupsTable[i].states[y].id;
+							networkEdges.add({from: a, to: b, value: groupsTable[i].intensities[x][y],
 											label: "" + groupsTable[i].intensities[x][y].toFixed(2)});
 						}
 					}
