@@ -1,7 +1,24 @@
 var MAViz = function (opts) {
 	var url = opts.url;
-	var networkContainer = opts.networkContainer;
-	var treeContainer = opts.treeContainer;
+	var networkContainer = document.getElementById(opts.networkContainer);
+	var treeContainer = document.getElementById(opts.treeContainer);
+	
+	var treeNodes = new vis.DataSet();
+	var treeEdges = new vis.DataSet();
+	var networkNodes = new vis.DataSet();
+	var networkEdges = new vis.DataSet();
+	
+	var treeData = {
+		nodes: treeNodes,
+		edges: treeEdges
+	};
+	
+	var networkData= {
+		nodes: networkNodes,
+		edges: networkEdges
+	};
+	
+	var groupsTable = [];
 	
 	var networkOptions = {
 		edges: {
@@ -20,9 +37,6 @@ var MAViz = function (opts) {
 			arrowScaleFactor: 0.4
 		}
 	};
-	
-	var treeNodes = new vis.DataSet();
-	var treeEdges = new vis.DataSet();
 	
 	function onDoubleClick(properties) {
 		alert("double click");
@@ -79,10 +93,19 @@ var MAViz = function (opts) {
 	}
 	
 	function draw(dataJson) {
-		var networkNodes = new vis.DataSet();
-		var networkEdges = new vis.DataSet();
+		treeNodes = new vis.DataSet();
+		treeEdges = new vis.DataSet();
+		networkNodes = new vis.DataSet();
+		networkEdges = new vis.DataSet();
 		
-		var networkData= {
+		addNodesAndEdgesToTree(dataJson);
+		
+		treeData = {
+			nodes: treeNodes,
+			edges: treeEdges
+		};
+		
+		networkData= {
 			nodes: networkNodes,
 			edges: networkEdges
 		};
