@@ -104,7 +104,7 @@ var MAViz = function (opts) {
 				},	
 				dataType: 'json',
 				error: function (jqXHR, jqXHR, status, err) {
-					alert("failed to receive object: " + textStatus + ", " + errorThrown);
+					alert("failed to receive object: " + status + ", " + err);
 				}
 			});
 		}

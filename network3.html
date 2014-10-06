@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>vis network</title>
-  <script src="lib/vis.js"></script>
+  <script src="vis/dist/vis.js"></script>
   <script src="jquery-1.11.1.min.js"></script>
   
   <style type="text/css">
@@ -1279,6 +1279,7 @@
 			        {
 			          "meanCentroidDist": 0.150844,
 			          "size": 676,
+			          active: false,
 			          "centroid": [
 			            0.664341,
 			            0.750279,
@@ -1293,6 +1294,7 @@
 			        {
 			          "meanCentroidDist": 0.185823,
 			          "size": 580,
+			          active: false,
 			          "centroid": [
 			            0.733385,
 			            0.574419,
@@ -1307,6 +1309,7 @@
 			        {
 			          "meanCentroidDist": 0.046755,
 			          "size": 672,
+			          active: true,
 			          "centroid": [
 			            0.683127,
 			            0.668093,
@@ -1321,6 +1324,7 @@
 			        {
 			          "meanCentroidDist": 0.139991,
 			          "size": 156,
+			          active: false,
 			          "centroid": [
 			            0.662932,
 			            0.583083,
@@ -1335,6 +1339,7 @@
 			        {
 			          "meanCentroidDist": 0.172075,
 			          "size": 180,
+			          active: false,
 			          "centroid": [
 			            0.678913,
 			            0.731512,
@@ -1349,6 +1354,7 @@
 			        {
 			          "meanCentroidDist": 0.130669,
 			          "size": 810,
+			          active: false,
 			          "centroid": [
 			            0.715321,
 			            0.922844,
@@ -1363,6 +1369,7 @@
 			        {
 			          "meanCentroidDist": 0.028637,
 			          "size": 270,
+			          active: false,
 			          "centroid": [
 			            0.731254,
 			            0.819935,
@@ -1377,6 +1384,7 @@
 			        {
 			          "meanCentroidDist": 0.087796,
 			          "size": 852,
+			          active: false,
 			          "centroid": [
 			            0.688022,
 			            0.54078,
@@ -1740,7 +1748,8 @@ function generateNetwork()
 
 	alert("Here 1, dataObject.intensities.length: " + jsonTestNewObject.intensities.length);
 	var jsonTable = [];			// NEW / this is where all the json objects will be stored... later this will be used to find children (through parentid) and later add them to network
-
+//	jsonTable.push(jsonTestObject);
+//	jsonTable.push(dataObject);
 	jsonTable.push(jsonTestNewObject);
 	
 	var groupsTable = [];
@@ -1844,8 +1853,15 @@ function generateNetwork()
 				
 				// add nodes
 				for (var j = 0; j < groupsTable[i].states.length; j++) {
-					networkNodes.add({id: j, shape: "dot", value: groupsTable[i].states[j].size, 
-										label: "" + groupsTable[i].states[j].size});
+					if (groupsTable[i].states[j].active) {
+						networkNodes.add({id: j, shape: "dot", value: groupsTable[i].states[j].size, 
+							label: "" + groupsTable[i].states[j].size, 
+							color: {background: "#97C2FC", border: "red"} });
+					} else {
+						networkNodes.add({id: j, shape: "dot", value: groupsTable[i].states[j].size, 
+							label: "" + groupsTable[i].states[j].size, color: {background: "#97C2FC", border: "#2B7CE9"} });
+					}
+					
 				}
 				
 				//add edges
