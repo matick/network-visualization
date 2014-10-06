@@ -118,7 +118,7 @@ var MAViz = function (opts) {
 	}
 	
 	var that = {
-		redraw: function () {
+		refresh: function () {
 			$.ajax({
 				url: url,
 				data: { },
