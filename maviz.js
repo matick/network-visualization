@@ -91,7 +91,7 @@ var MAViz = function (opts) {
 				
 				// add nodes
 				for (var j = 0; j < groupsTable[i].states.length; j++) {
-					networkNodes.add({id: groupsTable[i].states[j].id, shape: "dot", value: groupsTable[i].states[j].size, 
+					networkData.nodes.add({id: groupsTable[i].states[j].id, shape: "dot", value: groupsTable[i].states[j].size, 
 										label: "" + groupsTable[i].states[j].id});
 				}
 				
@@ -101,7 +101,7 @@ var MAViz = function (opts) {
 						if (groupsTable[i].intensities[x][y] > 0) {
 							var a = groupsTable[i].states[x].id;
 							var b = groupsTable[i].states[y].id;
-							networkEdges.add({from: a, to: b, value: groupsTable[i].intensities[x][y],
+							networkData.edges.add({from: a, to: b, value: groupsTable[i].intensities[x][y],
 											label: "" + groupsTable[i].intensities[x][y].toFixed(2)});
 						}
 					}
@@ -115,6 +115,8 @@ var MAViz = function (opts) {
 		treeEdges = new vis.DataSet();
 		networkNodes = new vis.DataSet();
 		networkEdges = new vis.DataSet();
+		
+		groupsTable = [];
 		
 		addNodesAndEdgesToTree(dataJson);
 		
