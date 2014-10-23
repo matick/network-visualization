@@ -54,7 +54,7 @@ var MAViz = function (opts) {
 		}
 	};
 	
-	function onDoubleClick(properties) {
+	function onNetworkDoubleClick(properties) {
 		alert("double click");
 	}
 	
@@ -65,6 +65,12 @@ var MAViz = function (opts) {
 	function onTreeSelect(properties) {
 		if (properties.nodes[0]) {
 			constructNetwork(properties.nodes[0]);
+		}
+	}
+	
+	function onNetworkSelect(properties) {
+		if (properties.nodes[0]) {
+			//alert("node selected - x, y: " + properties.nodes[0].x + ", " + properties.nodes[0].y);
 		}
 	}
 	
@@ -91,8 +97,12 @@ var MAViz = function (opts) {
 				
 				// add nodes
 				for (var j = 0; j < groupsTable[i].states.length; j++) {
+					var titleString = "";
+					titleStr = getTooltipStr(groupsTable[i].states[j]);		//get content for tooltip
 					networkData.nodes.add({id: groupsTable[i].states[j].id, shape: "dot", value: groupsTable[i].states[j].size, 
-										label: "" + groupsTable[i].states[j].id});
+										label: "" + groupsTable[i].states[j].id, 
+										//title: (groupsTable[i].states[j].centroid[j].name + ": " + groupsTable[i].states[j].centroid[j].value)});
+										title: (titleStr)});
 				}
 				
 				//add edges
@@ -108,6 +118,17 @@ var MAViz = function (opts) {
 				}
 			}
 		}
+	}
+	
+	function getTooltipStr(state) {
+		var result = "";
+		for (var i = 0; i < state.centroid.length; i++) {
+			var temp = state.centroid[i].name + ": " + state.centroid[i].value;
+			if (i < state.centroid.length - 1) {
+				result = result.concat(temp, "<br />");
+			} else result = result.concat(temp);
+		}
+		return result;
 	}
 	
 	function draw(dataJson) {
@@ -135,6 +156,8 @@ var MAViz = function (opts) {
 		
 		tree.on('select', onTreeSelect);
 		tree.on('doubleClick', onTreeDoubleClick);
+		network.on('select', onNetworkSelect);
+		network.on('doubleClick', onNetworkDoubleClick);
 	}
 	
 	var that = {
