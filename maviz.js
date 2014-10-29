@@ -112,7 +112,8 @@ var MAViz = function (opts) {
 							var a = groupsTable[i].states[x].id;
 							var b = groupsTable[i].states[y].id;
 							networkData.edges.add({from: a, to: b, value: groupsTable[i].intensities[x][y],
-											label: "" + groupsTable[i].intensities[x][y].toFixed(2)});
+											label: "" + groupsTable[i].intensities[x][y].toFixed(2),
+											title: groupsTable[i].intensities[x][y]});
 						}
 					}
 				}
